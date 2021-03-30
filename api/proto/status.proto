@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+package api;
+
+service Check {
+    rpc AddUrl (AddRequestUrl) returns (AddResponseUrl){}
+    rpc GetStatusUrl (RequestInfoByCheckUrl) returns (ResponseInfoByCheckUrl){}
+    rpc DeleteUrl (RequestUrlDelete) returns (ResponseUrlDelete){}
+}
+
+message AddRequestUrl{
+    string strurl = 1;
+    int32 countPointCheckUrl = 2;
+}
+message AddResponseUrl{
+    string result = 1;
+}
+
+message RequestInfoByCheckUrl{
+    string strurl = 1;
+}
+
+message ResponseInfoByCheckUrl{
+    string timeCheckUrl = 1;
+    string statusUrl = 2;
+}
+
+message RequestUrlDelete{
+    string strurl = 1;
+}
+
+message ResponseUrlDelete{
+    string strurl = 1;
+}
