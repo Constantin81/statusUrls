@@ -1,5 +1,7 @@
 syntax = "proto3";
 
+option go_package = "github.com/monkrus/grpc-from0;grpc_from0";
+
 package api;
 
 service Check {
@@ -9,7 +11,7 @@ service Check {
 }
 
 message AddRequestUrl{
-    string strurl = 1;
+    string strUrl = 1;
     int32 countPointCheckUrl = 2;
 }
 message AddResponseUrl{
@@ -17,7 +19,7 @@ message AddResponseUrl{
 }
 
 message RequestInfoByCheckUrl{
-    string strurl = 1;
+    string strUrl = 1;
 }
 
 message ResponseInfoByCheckUrl{
@@ -26,9 +28,9 @@ message ResponseInfoByCheckUrl{
 }
 
 message RequestUrlDelete{
-    string strurl = 1;
+    string strUrl = 1;
 }
 
 message ResponseUrlDelete{
-    string strurl = 1;
+    string strUrl = 1;
 }
