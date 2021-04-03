@@ -4,7 +4,8 @@ import (
 	"log"
 	"net"
 
-	protos "statusUrls/pkg/api/grpc/filegrps"
+	pb "statusUrls/api/currency"
+	protos "statusUrls/pkg/server"
 
 	"google.golang.org/grpc"
 )
@@ -17,14 +18,10 @@ func main() {
 		log.Fatal("%v", err)
 	}
 
-	cs := &protos.UnimplementedCheckServer{}
-
-	//log := log.Default()
-	// cs := server.NewGRPCServer(*log)
-	//t := &server.GRPCServer{}
+	cs := &protos.GRPCServer{}
 
 	grpc := grpc.NewServer()
-	protos.RegisterCheckServer(grpc, cs)
+	pb.RegisterCheckServer(grpc, cs)
 
 	if err := grpc.Serve(l); err != nil {
 		log.Fatal("%v", err)
