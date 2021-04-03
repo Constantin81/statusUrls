@@ -23,10 +23,12 @@ message RequestInfoByCheckUrl{
 }
 
 message ResponseInfoByCheckUrl{
-    string timeCheckUrl = 1;
-    string statusUrl = 2;
+    repeated Container containers = 1;
 }
-
+message Container {
+    string timeCheckUrl = 1;
+    int32 statusUrl = 2;
+}
 message RequestUrlDelete{
     string strUrl = 1;
 }

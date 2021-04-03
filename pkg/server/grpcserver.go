@@ -2,8 +2,9 @@ package server
 
 import (
 	"context"
+	"errors"
 	"fmt"
-	"net/http"
+	"log"
 	"net/url"
 	protos "statusUrls/api/currency"
 )
@@ -21,7 +22,7 @@ type InfoAboutUrl struct {
 
 type TimeCheckAndStatusUrl struct {
 	StatusCode   int32
-	TimeCheckUrl int32
+	TimeCheckUrl string
 }
 
 var List = []InfoAboutUrl{}
@@ -32,8 +33,8 @@ func (s *GRPCServer) AddUrl(ctx context.Context, req *protos.AddRequestUrl) (*pr
 	_, err := url.ParseRequestURI(req.StrUrl)
 
 	if err != nil {
-		return &protos.AddResponseUrl{Result: "No valid url"}, nil
-		//log.Fatal(err)
+		//return &protos.AddResponseUrl{Result: "No valid url"}, nil
+		log.Fatal(err)
 	}
 
 	var site = new(InfoAboutUrl)
@@ -51,23 +52,28 @@ func (s *GRPCServer) AddUrl(ctx context.Context, req *protos.AddRequestUrl) (*pr
 }
 
 func (s *GRPCServer) GetStatusUrl(ctx context.Context, req *protos.RequestInfoByCheckUrl) (*protos.ResponseInfoByCheckUrl, error) {
-	resp, err := http.Get(req.StrUrl)
-	if err != nil {
-		//log.Fatal(err)
-		return &protos.ResponseInfoByCheckUrl{TimeCheckUrl: req.StrUrl, StatusUrl: req.StrUrl}, nil
+
+	//strLastInfoUrl := make([]TimeCheckAndStatusUrl, 5)
+	containerInfo := []*protos.Container{}
+
+	for _, s := range List {
+		if s.SiteUrl == req.StrUrl {
+			fmt.Println("Url = ", s.SiteUrl)
+
+			for _, i := range s.InfoUrlAboutCheck {
+
+				var infoUrl = &protos.Container{TimeCheckUrl: i.TimeCheckUrl, StatusUrl: int32(i.StatusCode)}
+
+				containerInfo = append(containerInfo, infoUrl)
+
+			}
+			return &protos.ResponseInfoByCheckUrl{Containers: containerInfo}, nil
+		} else {
+			err := errors.New("math: square root of negative number")
+			return &protos.ResponseInfoByCheckUrl{}, err
+		}
 	}
-
-	// Print the HTTP Status Code and Status Name
-	fmt.Println("HTTP Response Status:", resp.StatusCode, http.StatusText(resp.StatusCode))
-
-	if resp.StatusCode >= 200 && resp.StatusCode <= 299 {
-
-		fmt.Println("HTTP Status is in the 2xx range")
-	} else {
-		fmt.Println("Argh! Broken")
-	}
-
-	return &protos.ResponseInfoByCheckUrl{TimeCheckUrl: req.StrUrl, StatusUrl: req.StrUrl}, nil
+	return &protos.ResponseInfoByCheckUrl{Containers: containerInfo}, nil
 }
 
 func (s *GRPCServer) DeleteUrl(ctx context.Context, req *protos.RequestUrlDelete) (*protos.ResponseUrlDelete, error) {
@@ -76,3 +82,31 @@ func (s *GRPCServer) DeleteUrl(ctx context.Context, req *protos.RequestUrlDelete
 
 func (s *GRPCServer) mustEmbedUnimplementedCheckServer() {
 }
+
+// func working(data []*protos.Container) ([]*protos.Container, error) {
+// 	var cs []*protos.Container
+// 	err := json.Unmarshal([]byte(data), &cs)
+// 	if err != nil {
+// 		log.Fatal(new.error("Can`t decode data"))
+// 	}
+// 	// handle the error here
+// 	return cs, nil
+// }
+
+//*resp, err := http.Get(req.StrUrl)
+// if err != nil {
+// 	//log.Fatal(err)
+// 	return &protos.ResponseInfoByCheckUrl{TimeCheckUrl: req.StrUrl, StatusUrl: req.StrUrl}, nil
+// }
+
+// // Print the HTTP Status Code and Status Name
+// fmt.Println("HTTP Response Status:", resp.StatusCode, http.StatusText(resp.StatusCode))
+// fmt.Println("HTTP Response Status:", )
+
+// if resp.StatusCode >= 200 && resp.StatusCode <= 299 {
+
+// 	fmt.Println("HTTP Status is in the 2xx range")
+// } else {
+// 	fmt.Println("Argh! Broken")
+//}
+//
