@@ -23,7 +23,7 @@ Run utility in new terminal:
 ``evans api/status.proto -p 8080``
 
 ## Endpoints
-The service accepts url and the number of times it is checked per day, at least once a day (test url - http://pinterest.com)
+The service accepts url and the number of times it is checked per day, at least once a day (test url - ``http://pinterest.com``)
 
 ``call AddUrl``
 
@@ -31,13 +31,13 @@ The service accepts url and the number of times it is checked per day, at least 
 
 ``countPointCheckUrl (TYPE_INT32) => 200``
 
-Getting information on url. The endpoint accepts the url and gives information about the latest checks (time and status codes) (test url - http://google.com)
+Getting information on url. The endpoint accepts the url and gives information about the latest checks (time and status codes) (test url - ``http://google.com``)
 
 ``call GetStatusUrl``
 
 ``strUrl (TYPE_STRING) => http://google.com``
 
-Endpoint accepts url. The status of this url is not checked but the history remains available (test url - http://google.com)
+Endpoint accepts url. The status of this url is not checked but the history remains available (test url - ``http://google.com``)
 
 ``call DeleteUrl``
 
