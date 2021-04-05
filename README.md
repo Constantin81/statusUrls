@@ -6,32 +6,39 @@ This is a grpc microservice designed to check the url status.
 
 ## Creating and running a project in Docker
 
-Create new docker image
-<mark>docker build -t status-url .</mark>
+Create new docker image: 
+``docker build -t status-url .``
 
-Run app in container interactive mode
-<mark>docker run -it -p 8080:8080 status-url</mark>
+Run app in container interactive mode:
+``docker run -it -p 8080:8080 status-url``
 
-Run container in background
-<mark>docker run -d -p 8080:8080 status-url</mark>
+Run container in background:
+``docker run -d -p 8080:8080 status-url``
 
 ## Testing service
 The Evans utility is used to test the service.
-<mark>https://github.com/ktr0731/evans</mark>
+``https://github.com/ktr0731/evans``
 
-Run utility in new terminal
-<mark>evans api/status.proto -p 8080</mark>
+Run utility in new terminal:
+``evans api/status.proto -p 8080``
 
-## Endpoins
+## Endpoints
 The service accepts url and the number of times it is checked per day, at least once a day (test url - http://pinterest.com)
-<mark>call AddUrl</mark>
-strUrl (TYPE_STRING) => http://pinterest.com
-countPointCheckUrl (TYPE_INT32) => 200
+
+``call AddUrl``
+
+``strUrl (TYPE_STRING) => http://pinterest.com``
+
+``countPointCheckUrl (TYPE_INT32) => 200``
 
 Getting information on url. The endpoint accepts the url and gives information about the latest checks (time and status codes) (test url - http://google.com)
-<mark>call GetStatusUrl</mark>
-strUrl (TYPE_STRING) => http://google.com
+
+``call GetStatusUrl``
+
+``strUrl (TYPE_STRING) => http://google.com``
 
 Endpoint accepts url. The status of this url is not checked but the history remains available (test url - http://google.com)
-<mark>call DeleteUrl</mark>
-strUrl (TYPE_STRING) => http://google.com
+
+``call DeleteUrl``
+
+``strUrl (TYPE_STRING) => http://google.com``
