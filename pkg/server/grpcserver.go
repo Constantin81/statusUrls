@@ -70,7 +70,7 @@ func (s *GRPCServer) GetStatusUrl(ctx context.Context, req *protos.RequestInfoBy
 			}
 			return &protos.ResponseInfoByCheckUrl{Containers: containerInfo}, nil
 		} else {
-			err := errors.New("math: square root of negative number")
+			err := errors.New("This is url dont in list")
 			return &protos.ResponseInfoByCheckUrl{Containers: nil}, err
 		}
 	}
