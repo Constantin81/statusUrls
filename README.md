@@ -22,23 +22,38 @@ The Evans utility is used to test the service.
 Run utility in new terminal:
 ``evans api/status.proto -p 8080``
 
+Function call:
+``call (name function)``
+
 ## Endpoints
 The service accepts url and the number of times it is checked per day, at least once a day (test url - ``http://pinterest.com``)
 
-``call AddUrl``
+``AddUrl``
 
-``strUrl (TYPE_STRING) => http://pinterest.com``
+``strUrl - http://pinterest.com``
 
-``countPointCheckUrl (TYPE_INT32) => 200``
+``countPointCheckUrl - 200``
 
 Getting information on url. The endpoint accepts the url and gives information about the latest checks (time and status codes) (test url - ``http://google.com``)
 
-``call GetStatusUrl``
+``GetStatusUrl``
 
-``strUrl (TYPE_STRING) => http://google.com``
+``strUrl - http://google.com``
+
+Response:
+``` 
+{
+  "containers": [
+    {
+      "timeCheckUrl": "2021-01-31 00:00:00 +0000 UTC",
+      "statusUrl": 200
+    }
+  ]
+}
+```
 
 Endpoint accepts url. The status of this url is not checked but the history remains available (test url - ``http://google.com``)
 
-``call DeleteUrl``
+``DeleteUrl``
 
-``strUrl (TYPE_STRING) => http://google.com``
+``strUrl - http://google.com``
